@@ -2,6 +2,12 @@
 
 A lightweight, production-ready MJPEG streaming server for the **Raspberry Pi Zero 2 W** with an **Arducam IMX335** camera module. Built in Rust with no Python and no OpenCV, it is a single static binary that shells out to `rpicam-vid` under the hood.
 
+> *don't trust your vision if it's blurry,*
+> *don't rush the yellow in a hurry,*
+> *the math is proven, the call is true,*
+> *better safe than sorry, let it clear, then pass through.*
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Pi%20Zero%202%20W-A22846)](https://www.raspberrypi.com/)
