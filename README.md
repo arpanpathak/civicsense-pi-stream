@@ -20,9 +20,16 @@ Everything cross-compiles inside Docker for any Pi OS — 32-bit Raspbian, 64-bi
 [![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Pi%20Zero%202%20W-A22846)](https://www.raspberrypi.com/)
 [![Camera](https://img.shields.io/badge/Camera-Arducam%20IMX335-00BBFF)](https://www.arducam.com/)
-[![CivicSense](https://img.shields.io/badge/CivicSense-Part%20of%20the%20ecosystem-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model)
+[![Release](https://img.shields.io/github/v/release/arpanpathak/civicsense-pi-stream?color=00BBFF)](https://github.com/arpanpathak/civicsense-pi-stream/releases)
+[![Docker Cross-Compile](https://img.shields.io/badge/Build-Docker%20multi--arch-blue)](Dockerfile)
 
-> Part of the [CivicSense](https://github.com/arpanpathak/driving-civicsense-vision-model) ecosystem: a privacy-first, edge-native AI vision system for intersection discipline and road civility. This server feeds the [stream client](https://github.com/arpanpathak/civicsense-stream-client), which runs YOLOv8 object detection on every frame, entirely on device.
+> ### 🚦 Part of the CivicSense ecosystem — privacy-first, edge-native AI for road civility
+>
+> [![CivicSense (main repo)](https://img.shields.io/badge/CivicSense-Main%20Repo-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model) — the umbrella project: edge AI perception for intersection discipline, lane courtesy, hazard alerts & cooperative safety. **All data collection & inference stay on-device — zero video leaves the car.**
+>
+> [![Stream Client](https://img.shields.io/badge/Stream%20Client-YOLOv8%20Detection-00CC66)](https://github.com/arpanpathak/civicsense-stream-client) — the Rust companion that consumes this server's MJPEG stream and runs YOLOv8n object detection with Candle (pure-Rust ML, no Python, no ONNX Runtime).
+
+**Data flow:** this repo *produces* the camera stream → the [stream client](https://github.com/arpanpathak/civicsense-stream-client) *perceives* objects on-device → insights are *consumed* by the [main CivicSense repo](https://github.com/arpanpathak/driving-civicsense-vision-model) for intersection discipline & cooperative safety.
 
 ---
 
