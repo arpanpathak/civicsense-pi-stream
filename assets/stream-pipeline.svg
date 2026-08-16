@@ -31,25 +31,25 @@
 
   <!-- IMX335 sensor -->
   <g filter="url(#glow)">
-    <rect x="50" y="140" width="330" height="120" rx="14" fill="#1a1609" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="50" y="140" width="330" height="124" rx="14" fill="#1a1609" stroke="#f59e0b" stroke-width="2.5"/>
   </g>
   <text x="215" y="172" fill="#f59e0b" font-size="17" font-weight="bold" text-anchor="middle">IMX335 sensor</text>
   <text x="215" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">Arducam · libcamera CSI + ISP</text>
   <text x="215" y="220" fill="#9ca3af" font-size="13" text-anchor="middle">hardware MJPEG encode → byte stream</text>
-  <text x="215" y="242" fill="#6b7280" font-size="12" text-anchor="middle">5V 2.5A · /dev/video0</text>
+  <text x="215" y="240" fill="#6b7280" font-size="12" text-anchor="middle">5V 2.5A · /dev/video0</text>
 
   <!-- rpicam-vid -->
   <g filter="url(#glow)">
-    <rect x="475" y="140" width="330" height="120" rx="14" fill="#0f1a2e" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="475" y="140" width="330" height="124" rx="14" fill="#0f1a2e" stroke="#3b82f6" stroke-width="2.5"/>
   </g>
   <text x="640" y="172" fill="#3b82f6" font-size="17" font-weight="bold" text-anchor="middle">rpicam-vid (child process)</text>
   <text x="640" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">--codec mjpeg --output -</text>
   <text x="640" y="220" fill="#9ca3af" font-size="13" text-anchor="middle">encapsulates libcamera complexity</text>
-  <text x="640" y="242" fill="#6b7280" font-size="12" text-anchor="middle">compressed JPEG frames on stdout</text>
+  <text x="640" y="240" fill="#6b7280" font-size="12" text-anchor="middle">compressed JPEG frames on stdout</text>
 
   <!-- camera.rs -->
   <g filter="url(#glow)">
-    <rect x="900" y="140" width="330" height="120" rx="14" fill="#0c1f18" stroke="#10b981" stroke-width="2.5"/>
+    <rect x="900" y="140" width="330" height="124" rx="14" fill="#0c1f18" stroke="#10b981" stroke-width="2.5"/>
   </g>
   <text x="1065" y="172" fill="#10b981" font-size="17" font-weight="bold" text-anchor="middle">camera.rs reader thread</text>
   <text x="1065" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">extract_jpeg() · 4 KB chunk reads</text>
@@ -90,22 +90,22 @@
   <text x="1105" y="474" fill="#6b7280" font-size="12" text-anchor="middle">CivicSense phone app</text>
 
   <!-- camera.rs -> SharedFrame arrow -->
-  <path d="M 1065 268 L 1065 330 L 850 330 L 850 352" fill="none" stroke="#34d399" stroke-width="3.5" marker-end="url(#arrowGreen)"/>
+  <path d="M 1065 268 L 1065 330 L 850 330 L 850 362" fill="none" stroke="#34d399" stroke-width="3.5" marker-end="url(#arrowGreen)"/>
   <text x="980" y="320" fill="#34d399" font-size="12" text-anchor="middle">newest complete JPEG</text>
 
   <!-- SharedFrame -> http.rs -->
-  <line x1="392" y1="420" x2="318" y2="420" stroke="#22d3ee" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
+  <line x1="394" y1="420" x2="305" y2="420" stroke="#22d3ee" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
   <text x="355" y="408" fill="#22d3ee" font-size="12" text-anchor="middle">grab latest</text>
 
   <!-- SharedFrame -> udp.rs -->
-  <line x1="888" y1="420" x2="962" y2="420" stroke="#f472b6" stroke-width="3.5" marker-end="url(#arrowPink)"/>
+  <line x1="886" y1="420" x2="975" y2="420" stroke="#f472b6" stroke-width="3.5" marker-end="url(#arrowPink)"/>
   <text x="925" y="408" fill="#f472b6" font-size="12" text-anchor="middle">grab latest</text>
 
   <!-- consumers -->
   <text x="175" y="548" fill="#f9fafb" font-size="15" font-weight="bold" text-anchor="middle">🖥️ Any web browser</text>
-  <line x1="175" y1="490" x2="175" y2="530" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowCyan)"/>
+  <line x1="175" y1="492" x2="175" y2="528" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowCyan)"/>
   <text x="1105" y="548" fill="#f9fafb" font-size="15" font-weight="bold" text-anchor="middle">📱 CivicSense app · Candle YOLOv8</text>
-  <line x1="1105" y1="490" x2="1105" y2="530" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowPink)"/>
+  <line x1="1105" y1="492" x2="1105" y2="528" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowPink)"/>
 
   <!-- footer -->
   <line x1="80" y1="590" x2="1200" y2="590" stroke="#1f2937" stroke-width="1.5"/>
