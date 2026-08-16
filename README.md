@@ -353,24 +353,9 @@ Building natively on the Pi is slow, and hand-rolled cross-compiling is a notori
 
 Understanding the pipeline demystifies the design and helps you debug:
 
-```
-IMX335 sensor (MJPEG out)
-        │  rpicam-vid child process, stdout
-        ▼
-┌─────────────────────────────┐
-│ camera.rs  reader thread    │  reads stdout bytes in 4 KB chunks,
-│            extract_jpeg()   │  finds complete JPEGs (FF D8 .. FF D9),
-│                             │  pushes newest into SharedFrame (Mutex<Option>)
-└──────────────┬──────────────┘
-               │  the ONE source of truth for "latest frame"
-               ▼
-┌──────────────────────────────────────────────────────────┐
-│ SharedFrame = Arc<Mutex<Option<Vec<u8>>>>                │
-│   - camera thread WRITES                                  │
-│   - http.rs thread  READS (per HTTP client)              │
-│   - udp.rs loop    READS (broadcast/unicast)             │
-└──────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="assets/stream-pipeline.svg" alt="CivicSense Pi Stream frame pipeline: IMX335 -> rpicam-vid -> camera.rs -> SharedFrame -> HTTP + UDP fan-out" width="900"/>
+</p>
 
 **Why `rpicam-vid` at all?** It encapsulates all the libcamera complexity (CSI sensor init, ISP tuning, encoding). We just give it `--codec mjpeg --output -` and read its stdout - cheap, robust, and forward-compatible.
 
