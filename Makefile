@@ -1,5 +1,5 @@
 # ============================================================
-# CivicSense Pi Stream — cross-compile with Docker
+# CivicSense Pi Stream - cross-compile with Docker
 #
 #   make build            build all targets into ./bin
 #   make build TARGETS="aarch64-unknown-linux-gnu"   # one target

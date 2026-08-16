@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # ============================================================
-# CivicSense Pi Stream — multi-architecture cross-compile builder
+# CivicSense Pi Stream - multi-architecture cross-compile builder
 #
 # ONE build produces release binaries for every supported Pi:
 #
@@ -18,7 +18,7 @@
 #   bin/<triple>/pi_stream  bin/<triple>/pi_stream_http  bin/<triple>/pi_stream_udp
 #
 # Everything is compiled inside one container with pinned toolchains,
-# so local machine state can never change the result — that is the
+# so local machine state can never change the result - that is the
 # point of building "dockerized".
 # ============================================================
 

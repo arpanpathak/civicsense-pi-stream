@@ -1,5 +1,5 @@
 // ============================================================
-// frame — the single source of truth for video frames.
+// frame - the single source of truth for video frames.
 //
 // `SharedFrame` is an `Arc<Mutex<Option<Vec<u8>>>>`:
 //   * the camera thread writes the newest complete JPEG frame,

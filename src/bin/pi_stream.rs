@@ -1,5 +1,5 @@
 // ============================================================
-// pi_stream — all-in-one streamer for WiFi-hotspot mode.
+// pi_stream - all-in-one streamer for WiFi-hotspot mode.
 //
 // Runs BOTH transports off one camera:
 //   * HTTP MJPEG on port 8000  (browser / legacy clients)

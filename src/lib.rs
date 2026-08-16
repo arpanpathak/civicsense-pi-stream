@@ -1,5 +1,5 @@
 // ============================================================
-// CivicSense Pi Stream — library crate
+// CivicSense Pi Stream - library crate
 //
 // The crate is split into a reusable library plus three small
 // binaries so every deployment mode shares the same code:

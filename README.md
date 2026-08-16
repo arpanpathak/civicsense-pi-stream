@@ -8,7 +8,7 @@ A lightweight, production-ready video streaming server for the **Raspberry Pi Ze
 | `pi_stream_udp` | raw MJPEG UDP datagrams | **phone app** streaming |
 | `pi_stream` | HTTP **+** UDP | all-in-one **WiFi hotspot** mode |
 
-Everything cross-compiles inside Docker for any Pi OS — 32-bit Raspbian, 64-bit Raspberry Pi OS, or your dev machine.
+Everything cross-compiles inside Docker for any Pi OS: 32-bit Raspbian, 64-bit Raspberry Pi OS, or your dev machine.
 
 > *don't trust your vision if it's blurry,*
 > *don't rush the yellow in a hurry,*
@@ -23,13 +23,13 @@ Everything cross-compiles inside Docker for any Pi OS — 32-bit Raspbian, 64-bi
 [![Release](https://img.shields.io/github/v/release/arpanpathak/civicsense-pi-stream?color=00BBFF)](https://github.com/arpanpathak/civicsense-pi-stream/releases)
 [![Docker Cross-Compile](https://img.shields.io/badge/Build-Docker%20multi--arch-blue)](Dockerfile)
 
-> ### 🚦 Part of the CivicSense ecosystem — privacy-first, edge-native AI for road civility
+> ### 🚦 Part of the CivicSense ecosystem, privacy-first edge-native AI for road civility
 >
-> [![CivicSense (main repo)](https://img.shields.io/badge/CivicSense-Main%20Repo-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model) — the umbrella project: edge AI perception for intersection discipline, lane courtesy, hazard alerts & cooperative safety. **All data collection & inference stay on-device — zero video leaves the car.**
+> [![CivicSense (main repo)](https://img.shields.io/badge/CivicSense-Main%20Repo-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model): the umbrella project (edge AI perception for intersection discipline, lane courtesy, hazard alerts & cooperative safety). **All data collection & inference stay on-device, zero video leaves the car.**
 >
-> [![Stream Client](https://img.shields.io/badge/Stream%20Client-YOLOv8%20Detection-00CC66)](https://github.com/arpanpathak/civicsense-stream-client) — the Rust companion that consumes this server's MJPEG stream and runs YOLOv8n object detection with Candle (pure-Rust ML, no Python, no ONNX Runtime).
+> [![Stream Client](https://img.shields.io/badge/Stream%20Client-YOLOv8%20Detection-00CC66)](https://github.com/arpanpathak/civicsense-stream-client): the Rust companion that consumes this server's MJPEG stream and runs YOLOv8n object detection with Candle (pure-Rust ML, no Python, no ONNX Runtime).
 
-**Data flow:** this repo *produces* the camera stream → the [stream client](https://github.com/arpanpathak/civicsense-stream-client) *perceives* objects on-device → insights are *consumed* by the [main CivicSense repo](https://github.com/arpanpathak/driving-civicsense-vision-model) for intersection discipline & cooperative safety.
+**Data flow:** this repo *produces* the camera stream -> the [stream client](https://github.com/arpanpathak/civicsense-stream-client) *perceives* objects on-device -> insights are *consumed* by the [main CivicSense repo](https://github.com/arpanpathak/driving-civicsense-vision-model) for intersection discipline & cooperative safety.
 
 ---
 
@@ -84,10 +84,10 @@ ssh-keygen -t ed25519 -a 100 -C "your_email@example.com"
 
 ### Flash the SD card with Raspberry Pi Imager
 
-Open Raspberry Pi Imager on your Mac and choose **Raspberry Pi OS (other) → Raspberry Pi OS (32-bit)** (or the Lite version). Click the gear icon (⚙️) and set:
+Open Raspberry Pi Imager on your Mac and choose **Raspberry Pi OS (other) -> Raspberry Pi OS (32-bit)** (or the Lite version). Click the gear icon and set:
 
 - **Hostname**: `civicsense`
-- **Enable SSH** → Allow public-key authentication only
+- **Enable SSH** -> Allow public-key authentication only
 - **Authorized keys**: paste your public key (from `~/.ssh/civicsense.pub`)
 - **Username**: `civicsense` (or whatever you prefer)
 - **WiFi SSID and password** (critical for headless operation)
@@ -304,8 +304,8 @@ The whole project cross-compiles inside one Docker container, so the build is id
 
 | Target triple | Runs on |
 |---|---|
-| `armv7-unknown-linux-gnueabihf` | Pi Zero 2 W / Pi 2 / Pi 3 — Raspbian **32-bit** (what this project uses) |
-| `aarch64-unknown-linux-gnu` | Pi 3 / Pi 4 / Pi 5 / Zero 2 W — Raspberry Pi OS **64-bit** |
+| `armv7-unknown-linux-gnueabihf` | Pi Zero 2 W / Pi 2 / Pi 3: Raspbian **32-bit** (what this project uses) |
+| `aarch64-unknown-linux-gnu` | Pi 3 / Pi 4 / Pi 5 / Zero 2 W: Raspberry Pi OS **64-bit** |
 | `x86_64-unknown-linux-gnu` | dev machines / CI |
 
 ### Quick start
@@ -329,7 +329,7 @@ Build just one target: `make build TARGETS="aarch64-unknown-linux-gnu"`.
 
 No buildx? Use the fallback: `make build-legacy` (plain `docker build` + `docker cp`).
 
-The binaries link against the container's glibc, which matches the glibc on the corresponding Raspberry Pi OS release — no more segfaults from glibc mismatches.
+The binaries link against the container's glibc, which matches the glibc on the corresponding Raspberry Pi OS release, so no more segfaults from glibc mismatches.
 
 ## 10. UDP Streaming for the Phone App
 
@@ -350,7 +350,7 @@ Frames bigger than `65507 - 16` bytes span several datagrams. The app buffers fr
 
 ### Discovery ("connect")
 
-The app sends the 4-byte packet `PING` to `<pi-ip>:<port>`. The Pi replies `PONG` and (when broadcast is off) unicasts frames to that address. With broadcast on — the default — the Pi pushes frames to `255.255.255.255:<port>` and the app just listens; no IP knowledge needed.
+The app sends the 4-byte packet `PING` to `<pi-ip>:<port>`. The Pi replies `PONG` and (when broadcast is off) unicasts frames to that address. With broadcast on (the default), the Pi pushes frames to `255.255.255.255:<port>` and the app just listens; no IP knowledge needed.
 
 ### Configuration
 
@@ -359,17 +359,17 @@ The app sends the 4-byte packet `PING` to `<pi-ip>:<port>`. The Pi replies `PONG
 | `PI_STREAM_UDP_PORT` | 9000 | UDP port |
 | `PI_STREAM_UDP_BROADCAST` | 1 | send to 255.255.255.255 |
 | `PI_STREAM_UDP_FPS` | 15 | UDP send rate |
-| `PI_STREAM_UDP_TARGETS` | — | extra unicast `ip[:port]` list |
+| `PI_STREAM_UDP_TARGETS` | (none) | extra unicast `ip[:port]` list |
 
 ## 11. WiFi Hotspot Mode
 
-Plug the Pi into the car's USB-A port: the Pi becomes a camera hotspot. Power comes from the USB port, the Pi broadcasts its own WiFi network, the phone joins it and streams over UDP — no router, no internet needed.
+Plug the Pi into the car's USB-A port: the Pi becomes a camera hotspot. Power comes from the USB port, the Pi broadcasts its own WiFi network, the phone joins it and streams over UDP: no router, no internet needed.
 
 Two scripts are provided; pick the one that matches your OS:
 
 | Script | For |
 |---|---|
-| `scripts/hotspot-nmcli.sh` | Raspberry Pi OS (desktop or Lite) with NetworkManager — **default since Bookworm** |
+| `scripts/hotspot-nmcli.sh` | Raspberry Pi OS (desktop or Lite) with NetworkManager (**default since Bookworm**) |
 | `scripts/hotspot-hostapd.sh` | classic hostapd + dnsmasq setups (older Lite, or NetworkManager disabled) |
 
 Both bring up SSID `CivicSense` (password `civicsense123`, override with `PI_STREAM_SSID` / `PI_STREAM_PASSWORD`) and set the Pi as the access point:
@@ -403,7 +403,7 @@ pi_stream/
 │   └── install.sh           # install binaries + systemd unit
 ├── deploy/pi_stream.service # systemd unit
 ├── Dockerfile               # multi-arch cross-compile builder
-├── Makefile                 # make build → ./bin
+├── Makefile                 # make build -> ./bin
 └── .cargo/config.toml       # cross-linkers for armv7 / aarch64
 ```
 

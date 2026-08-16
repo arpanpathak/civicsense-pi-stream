@@ -1,5 +1,5 @@
 // ============================================================
-// pi_stream_udp — UDP MJPEG datagram streamer (phone-app protocol).
+// pi_stream_udp - UDP MJPEG datagram streamer (phone-app protocol).
 //
 // Sends the live camera as raw MJPEG datagrams on port 9000
 // (override with PI_STREAM_UDP_PORT). See src/udp.rs for the wire
@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Start the background thread that reads from `rpicam-vid`.
     let camera_handle = camera::spawn_camera_thread(frame_store.clone(), &camera_cfg)?;
 
-    // Start the UDP streamer — this runs forever.
+    // Start the UDP streamer - this runs forever.
     udp::start_udp_sender(frame_store, &udp_cfg)?;
 
     // Wait for the camera thread (never exits, but join anyway).

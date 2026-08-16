@@ -1,5 +1,5 @@
 // ============================================================
-// config — environment-variable configuration.
+// config - environment-variable configuration.
 //
 // Every binary reads the same variables with the same defaults,
 // so one set of systemd / Docker settings works everywhere:
@@ -14,7 +14,7 @@
 //   PI_STREAM_UDP_FPS        UDP send rate               (15)
 //   PI_STREAM_UDP_TARGETS    comma-separated ip[:port]   (none)
 //
-// No config file to manage — just set variables in the systemd unit,
+// No config file to manage - just set variables in the systemd unit,
 // a shell wrapper, or a container.
 // ============================================================
 
@@ -35,7 +35,7 @@ fn env_u16(key: &str, default: u16) -> u16 {
         .unwrap_or(default)
 }
 
-/// Parses a boolean environment variable ("1"/"true"/"yes"/"on" → true).
+/// Parses a boolean environment variable ("1"/"true"/"yes"/"on" -> true).
 fn env_bool(key: &str, default: bool) -> bool {
     match env_or(key, if default { "1" } else { "0" })
         .to_ascii_lowercase()

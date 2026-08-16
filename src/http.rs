@@ -1,5 +1,5 @@
 // ============================================================
-// http — MJPEG over HTTP (the original pi_stream behavior).
+// http - MJPEG over HTTP (the original pi_stream behavior).
 //
 // Serves the shared frame store as `multipart/x-mixed-replace` so
 // any browser or `<img>` tag shows a live stream at
@@ -49,7 +49,7 @@ fn handle_client(mut stream: TcpStream, store: SharedFrame) {
         "Content-Type: multipart/x-mixed-replace; boundary=--frame\r\n\r\n"
     );
 
-    // If writing headers fails, the client is already gone — just exit.
+    // If writing headers fails, the client is already gone - just exit.
     if stream.write_all(headers.as_bytes()).is_err() {
         return;
     }
@@ -61,7 +61,7 @@ fn handle_client(mut stream: TcpStream, store: SharedFrame) {
             Err(_) => None,
         };
 
-        // No frame yet — wait a bit and try again.
+        // No frame yet - wait a bit and try again.
         let Some(frame) = frame else {
             thread::sleep(Duration::from_millis(50));
             continue;
@@ -74,7 +74,7 @@ fn handle_client(mut stream: TcpStream, store: SharedFrame) {
         );
 
         // Write boundary + frame. Any failure means the connection is
-        // broken — exit.
+        // broken - exit.
         if stream.write_all(boundary.as_bytes()).is_err() {
             break;
         }

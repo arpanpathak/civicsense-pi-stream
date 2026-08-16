@@ -1,5 +1,5 @@
 // ============================================================
-// pi_stream_http — HTTP MJPEG streaming server.
+// pi_stream_http - HTTP MJPEG streaming server.
 //
 // This is the original pi_stream behavior, preserved as its own
 // binary. Serves the live camera as multipart MJPEG on port 8000
@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Start the background thread that reads from `rpicam-vid`.
     let camera_handle = camera::spawn_camera_thread(frame_store.clone(), &camera_cfg)?;
 
-    // Start the HTTP server — this runs forever.
+    // Start the HTTP server - this runs forever.
     http::start_http_server(frame_store, &http_cfg)?;
 
     // Wait for the camera thread (never exits, but join anyway).

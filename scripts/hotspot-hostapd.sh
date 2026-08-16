@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-# CivicSense Pi Stream — WiFi hotspot (hostapd + dnsmasq)
+# CivicSense Pi Stream - WiFi hotspot (hostapd + dnsmasq)
 #
 # The classic approach for headless/Lite images or setups where
 # NetworkManager is disabled. Configures:
@@ -54,7 +54,7 @@ nohook wpa_supplicant
 EOF
     systemctl restart dhcpcd
 else
-    echo "warning: no /etc/dhcpcd.conf found — set a static IP on $IFACE yourself" >&2
+    echo "warning: no /etc/dhcpcd.conf found - set a static IP on $IFACE yourself" >&2
 fi
 
 # --- hostapd ------------------------------------------------------------

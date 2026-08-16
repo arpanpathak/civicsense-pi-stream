@@ -1,5 +1,5 @@
 // ============================================================
-// udp — MJPEG over UDP datagrams (the phone-app protocol).
+// udp - MJPEG over UDP datagrams (the phone-app protocol).
 //
 // Wire format, 16-byte header followed by JPEG payload
 // (all integers little-endian):
@@ -77,7 +77,7 @@ pub fn start_udp_sender(store: SharedFrame, cfg: &UdpConfig) -> Result<(), std::
     // thread, read by the sender loop.
     let targets = Arc::new(Mutex::new(Vec::<Target>::new()));
 
-    // Discovery thread — answer "PING" with "PONG" and register the
+    // Discovery thread - answer "PING" with "PONG" and register the
     // phone for unicast delivery.
     let disco_socket = socket.try_clone()?;
     let disco_targets = targets.clone();
@@ -93,7 +93,7 @@ fn discovery_loop(socket: UdpSocket, targets: Arc<Mutex<Vec<Target>>>) {
     loop {
         let (n, src) = match socket.recv_from(&mut buf) {
             Ok(v) => v,
-            Err(_) => continue, // transient error — keep listening
+            Err(_) => continue, // transient error - keep listening
         };
 
         // Only react to the exact "PING" magic; video datagrams start
@@ -124,7 +124,7 @@ fn sender_loop(
     let mut sequence: u32 = 0;
 
     loop {
-        // Grab the newest frame — the same store the HTTP server reads.
+        // Grab the newest frame - the same store the HTTP server reads.
         let frame = match store.lock() {
             Ok(guard) => guard.clone(),
             Err(_) => None,
@@ -164,7 +164,7 @@ fn send_frame(socket: &UdpSocket, addr: SocketAddr, frame: &[u8], sequence: u32)
 
     for (i, chunk) in frame.chunks(MAX_UDP_PAYLOAD).enumerate() {
         let datagram = build_datagram(chunk, sequence, i as u16, total);
-        // Ignore send errors: UDP is fire-and-forget — the next frame
+        // Ignore send errors: UDP is fire-and-forget - the next frame
         // replaces anything that gets lost.
         let _ = socket.send_to(&datagram, addr);
     }

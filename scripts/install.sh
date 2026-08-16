@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================
-# CivicSense Pi Stream — install binaries + systemd service
+# CivicSense Pi Stream - install binaries + systemd service
 #
 #   Usage:  sudo ./scripts/install.sh [path-to-binaries]
 #
@@ -25,7 +25,7 @@ REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 BIN_DIR="${1:-$REPO_ROOT/bin/armv7-unknown-linux-gnueabihf}"
 
 if [ ! -d "$BIN_DIR" ]; then
-    echo "error: no binaries in $BIN_DIR — run 'make build' first" >&2
+    echo "error: no binaries in $BIN_DIR - run 'make build' first" >&2
     exit 1
 fi
 

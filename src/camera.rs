@@ -1,5 +1,5 @@
 // ============================================================
-// camera — rpicam-vid subprocess wrapper.
+// camera - rpicam-vid subprocess wrapper.
 //
 // `rpicam-vid` (the modern replacement for `raspivid`) encodes the
 // Arducam IMX335 sensor to MJPEG and writes the stream to stdout.
@@ -41,7 +41,7 @@ pub fn spawn_camera_thread(
         .stderr(Stdio::null())
         .spawn()?; // propagate error if the process fails to start
 
-    // Take ownership of stdout — if None, the process didn't pipe it.
+    // Take ownership of stdout - if None, the process didn't pipe it.
     let stdout = child.stdout.ok_or_else(|| {
         std::io::Error::new(std::io::ErrorKind::BrokenPipe, "No stdout from rpicam-vid")
     })?;
@@ -57,7 +57,7 @@ pub fn spawn_camera_thread(
         // `while let` + `match` keeps the loop alive on transient errors.
         while let Ok(n) = reader.read(&mut chunk) {
             if n == 0 {
-                break; // EOF — camera died
+                break; // EOF - camera died
             }
             // Append new data to the buffer.
             buffer.extend_from_slice(&chunk[..n]);
