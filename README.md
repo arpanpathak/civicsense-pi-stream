@@ -130,6 +130,39 @@ Read on for the full, platform-neutral walkthrough.
 
 This section deliberately stays **OS-neutral**: you flash an SD card with Raspberry Pi OS, and the tool for that - the official **Raspberry Pi Imager** - runs on Windows, macOS, and Linux alike. There is nothing Mac-specific here.
 
+### 0. Generate an SSH keypair (do this BEFORE you flash)
+
+SSH is how you will log in to the headless Pi, and the cleanest way to authenticate is a **keypair** instead of a password. You generate the keypair **once, on your own machine**; the *private* half stays with you, and the *public* half gets baked into the SD card image so the Pi trusts you from the very first boot.
+
+Open a terminal (macOS/Linux: any terminal; Windows 10+ and 11: PowerShell or Terminal, which ship OpenSSH built-in) and run:
+
+```bash
+ssh-keygen -t ed25519 -a 100 -C "your_email@example.com"
+```
+
+Press Enter to accept the default location (`~/.ssh/id_ed25519`), and set a passphrase (strongly recommended - it encrypts the private key on disk, so a stolen laptop file alone is not enough to impersonate you).
+
+This creates two files:
+
+| File | What it is | Rule |
+|---|---|---|
+| `~/.ssh/id_ed25519` | Your **private** key | NEVER share, upload, or commit this |
+| `~/.ssh/id_ed25519.pub` | Your **public** key | Safe to share; this is what you paste into Imager |
+
+What the flags mean:
+
+- `-t ed25519` - the key algorithm (see "SSH cryptography in detail" below for why Ed25519 and how it relates to RSA).
+- `-a 100` - 100 rounds of the key-derivation function that stretches your passphrase. Higher means slower to brute-force the private key if it is ever stolen.
+- `-C "comment"` - a human label (usually your email) so you can tell keys apart.
+
+View your public key - this exact text is what goes into Imager's "Authorized keys" field:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+> **Why this must happen BEFORE flashing:** Imager's pre-config writes your public key into the Pi's `~/.ssh/authorized_keys` during first boot. Generate the key afterward and you would need a keyboard + monitor attached to the Pi, or a second boot, to get in. Keys first, then flash.
+
 ### 1. Get Raspberry Pi Imager
 
 Download the official **Raspberry Pi Imager** from [raspberrypi.com/software](https://www.raspberrypi.com/software/). It ships installers for Windows, macOS, and Ubuntu/Debian. Install it on whatever machine you have.
@@ -173,7 +206,42 @@ ssh pi@civicsense          # or ssh <user>@<ip>
 
 First connect may ask to trust the host key (a normal ECDSA fingerprint warning).
 
-> **SSH keys are portable.** A public key is just text; the same one works whether you generated it on Windows (PuTTYgen/PowerShell), macOS, or Linux. No OS-specific ceremony required - that's why we keep it out of the guide.
+> **SSH keys are portable.** A public key is just text; the same one works whether you generated it on Windows (PowerShell/OpenSSH or PuTTYgen), macOS, or Linux. The steps in [step 0](#0-generate-an-ssh-keypair-do-this-before-you-flash) are identical everywhere - there is no OS-specific ceremony.
+
+---
+
+### SSH cryptography in detail: what is actually happening
+
+"RSA", "Diffie-Hellman" and "keys" get thrown around loosely, but an SSH connection actually runs a four-phase handshake, and each phase uses a *different* kind of math. Here is the honest, end-to-end picture.
+
+**Two different jobs, two different math families.**
+
+| Job | Math | Modern SSH default |
+|---|---|---|
+| Agree on a secret session key (secrecy) | Diffie-Hellman (DH), elliptic-curve variant ECDH/X25519 | X25519 |
+| Prove identity (authentication) | Signatures: RSA, Ed25519, ECDSA | Ed25519 (host key + user key) |
+| Bulk encryption of the session | Symmetric cipher | AES-GCM / ChaCha20-Poly1305 |
+
+A classic confusion: **RSA is NOT key exchange.** RSA is an asymmetric cipher that SSH uses to *sign* (prove identity). Key *exchange* is a separate job done by Diffie-Hellman (or its elliptic-curve form). And Ed25519 - which this guide's `ssh-keygen -t ed25519` creates - is a modern signature scheme that replaces RSA for SSH keys: 32-byte keys (vs 256+ bytes for RSA-2048), faster, and considered stronger per byte.
+
+**RSA, in detail.** Pick two large primes `p` and `q`, compute `n = p * q` and `phi = (p-1) * (q-1)`. Choose a public exponent `e` (usually 65537) and compute the private exponent `d` so that `e * d = 1 (mod phi)`. The public key is `(n, e)`; the private key is `(n, d)`. Everything runs as modular exponentiation: `c = m^e mod n` to encrypt, `m = c^d mod n` to decrypt, and `s = hash^d mod n` to sign (verification checks `s^e mod n == hash`). It is secure because factoring `n` back into `p` and `q` is computationally infeasible at 2048 bits and larger. In SSH, your private key never leaves your machine: the Pi sends a random challenge, your client signs it with `d`, and the Pi verifies the signature with the public key you baked into `authorized_keys`.
+
+**Diffie-Hellman key exchange, in detail.** Both sides agree on public values `(p, g)`. You pick a secret `a` and send `A = g^a mod p`; the Pi picks a secret `b` and sends `B = g^b mod p`. You compute `K = B^a mod p`, the Pi computes `K = A^b mod p` - both arrive at the SAME `K = g^(a*b) mod p` - yet an eavesdropper who only saw `A` and `B` cannot recover `K` without solving the discrete-logarithm problem, which is intractable for large `p`. Modern SSH uses the elliptic-curve version (X25519 / Curve25519) of the same idea: faster, smaller numbers, same security story.
+
+**Why "forward secrecy" matters.** The DH keys are *ephemeral* - fresh ones every connection. So even if someone later steals the Pi's long-term host key or your private key, they still cannot decrypt *recorded* past sessions, because each session's key existed only for that session. That is exactly why SSH does key exchange (DH) at all, instead of simply encrypting with the public key: DH is what buys you forward secrecy.
+
+**The four phases of an SSH connection.**
+
+1. **TCP connect** to the Pi on port 22.
+2. **Key exchange (DH/ECDH/X25519).** Client and Pi compute a shared, ephemeral symmetric session key. Everything after this point is encrypted.
+3. **Server authentication (host key).** The Pi signs the handshake transcript with its *host key* (RSA or Ed25519). Your client verifies the signature against `~/.ssh/known_hosts`. This is the only defense against a man-in-the-middle (MITM) - the fingerprint warning you see on first connect is exactly this step. Verify the fingerprint out-of-band, then accept.
+4. **Client authentication (your key).** The Pi sends a challenge; your client signs it with your private key; the Pi verifies against the public key in `authorized_keys`. Your private key never crossed the wire.
+5. **Data.** All remaining traffic (including your shell) flows through the tunnel, encrypted with the session key using a symmetric cipher (AES-GCM or ChaCha20-Poly1305).
+
+**Why public-key auth beats passwords.**
+
+- A password is delivered inside the encrypted tunnel, but the Pi holds its hash, and any machine that can reach port 22 can try to brute-force it.
+- With a key, there is nothing to steal by guessing: an attacker without your private key cannot pass the signature challenge. Combine this with `PasswordAuthentication no` in `/etc/ssh/sshd_config` and the Pi's SSH port becomes practically uninteresting to brute-forcers.
 
 ---
 
