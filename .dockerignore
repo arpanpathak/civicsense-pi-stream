@@ -1,0 +1,9 @@
+# Keep the build context tiny — only what cargo needs to compile.
+target
+bin
+.git
+.DS_Store
+scripts
+deploy
+Makefile
+README.md

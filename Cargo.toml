@@ -3,10 +3,35 @@ name = "pi_stream"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
+description = "MJPEG streaming (HTTP + UDP) for Raspberry Pi with Arducam IMX335"
 
+# The project is split into a reusable library (src/lib.rs) plus three
+# small binaries (src/bin/), so every deployment mode shares one code base:
+#
+#   pi_stream_http  – original HTTP MJPEG server            (port 8000)
+#   pi_stream_udp   – UDP MJPEG datagram streamer           (port 9000)
+#   pi_stream       – all-in-one: HTTP + UDP, for hotspot mode
 [dependencies]
 bytes = "1.0"
+
+[lib]
+name = "pi_stream"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pi_stream"
+path = "src/bin/pi_stream.rs"
+
+[[bin]]
+name = "pi_stream_http"
+path = "src/bin/pi_stream_http.rs"
+
+[[bin]]
+name = "pi_stream_udp"
+path = "src/bin/pi_stream_udp.rs"
 
 [profile.release]
 lto = true
 panic = "abort"
+# Strip debug symbols — the binaries live on a 512 MB Pi.
+strip = true

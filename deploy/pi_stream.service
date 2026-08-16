@@ -1,0 +1,19 @@
+[Unit]
+Description=CivicSense Pi Stream (HTTP MJPEG + UDP datagrams)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# The all-in-one binary: HTTP MJPEG on :8000, UDP MJPEG on :9000.
+ExecStart=/usr/local/bin/pi_stream
+Restart=always
+RestartSec=2
+# Adjust to the user that owns the camera / wifi on your Pi.
+User=pi
+# Optional overrides (defaults shown):
+# Environment=PI_STREAM_UDP_BROADCAST=1
+# Environment=PI_STREAM_UDP_PORT=9000
+# Environment=PI_STREAM_HTTP_PORT=8000
+
+[Install]
+WantedBy=multi-user.target
