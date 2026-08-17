@@ -24,8 +24,8 @@
   <rect width="1280" height="640" fill="url(#bg)"/>
 
   <!-- title -->
-  <text x="640" y="52" fill="#f9fafb" font-size="32" font-weight="bold" text-anchor="middle">CivicSense Pi Stream  -  Frame Pipeline</text>
-  <text x="640" y="84" fill="#9ca3af" font-size="18" text-anchor="middle">IMX335 -> rpicam-vid -> one shared frame -> HTTP + UDP fans-out  -  100% on-device, zero cloud</text>
+  <text x="640" y="52" fill="#f9fafb" font-size="32" font-weight="bold" text-anchor="middle">CivicSense Pi Stream - Frame Pipeline</text>
+  <text x="640" y="84" fill="#9ca3af" font-size="18" text-anchor="middle">IMX335 -> rpicam-vid -> one shared frame -> HTTP + UDP fans-out - 100% on-device, zero cloud</text>
 
   <!-- ================= ROW 1 : capture chain ================= -->
 
@@ -34,9 +34,9 @@
     <rect x="50" y="140" width="330" height="124" rx="14" fill="#1a1609" stroke="#f59e0b" stroke-width="2.5"/>
   </g>
   <text x="215" y="172" fill="#f59e0b" font-size="17" font-weight="bold" text-anchor="middle">IMX335 sensor</text>
-  <text x="215" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">Arducam  -  libcamera CSI + ISP</text>
+  <text x="215" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">Arducam - libcamera CSI + ISP</text>
   <text x="215" y="220" fill="#9ca3af" font-size="13" text-anchor="middle">hardware MJPEG encode -> byte stream</text>
-  <text x="215" y="240" fill="#6b7280" font-size="12" text-anchor="middle">5V 2.5A  -  /dev/video0</text>
+  <text x="215" y="240" fill="#6b7280" font-size="12" text-anchor="middle">5V 2.5A - /dev/video0</text>
 
   <!-- rpicam-vid -->
   <g filter="url(#glow)">
@@ -52,7 +52,7 @@
     <rect x="900" y="140" width="330" height="124" rx="14" fill="#0c1f18" stroke="#10b981" stroke-width="2.5"/>
   </g>
   <text x="1065" y="172" fill="#10b981" font-size="17" font-weight="bold" text-anchor="middle">camera.rs reader thread</text>
-  <text x="1065" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">extract_jpeg()  -  4 KB chunk reads</text>
+  <text x="1065" y="198" fill="#f9fafb" font-size="14" text-anchor="middle">extract_jpeg() - 4 KB chunk reads</text>
   <text x="1065" y="220" fill="#9ca3af" font-size="13" text-anchor="middle">finds complete JPEGs (FF D8 .. FF D9)</text>
   <text x="1065" y="242" fill="#6b7280" font-size="12" text-anchor="middle">drops partial frames, keeps newest</text>
 
@@ -68,14 +68,14 @@
   </g>
   <text x="640" y="398" fill="#8b5cf6" font-size="18" font-weight="bold" text-anchor="middle">SharedFrame = Arc&lt;Mutex&lt;Option&lt;Vec&lt;u8&gt;&gt;&gt;&gt;</text>
   <text x="640" y="428" fill="#f9fafb" font-size="14" text-anchor="middle">the ONE source of truth for the latest frame</text>
-  <text x="640" y="452" fill="#9ca3af" font-size="13" text-anchor="middle">camera thread WRITES  -  readers grab the newest</text>
-  <text x="640" y="474" fill="#6b7280" font-size="12" text-anchor="middle">never queues  -  a slow viewer simply misses frames</text>
+  <text x="640" y="452" fill="#9ca3af" font-size="13" text-anchor="middle">camera thread WRITES - readers grab the newest</text>
+  <text x="640" y="474" fill="#6b7280" font-size="12" text-anchor="middle">never queues - a slow viewer simply misses frames</text>
 
   <!-- http.rs fan-out -->
   <g filter="url(#glow)">
     <rect x="40" y="380" width="270" height="110" rx="14" fill="#0b1c22" stroke="#06b6d4" stroke-width="2.5"/>
   </g>
-  <text x="175" y="410" fill="#06b6d4" font-size="16" font-weight="bold" text-anchor="middle">http.rs  -  port 8000</text>
+  <text x="175" y="410" fill="#06b6d4" font-size="16" font-weight="bold" text-anchor="middle">http.rs - port 8000</text>
   <text x="175" y="436" fill="#f9fafb" font-size="13" text-anchor="middle">multipart/x-mixed-replace</text>
   <text x="175" y="456" fill="#9ca3af" font-size="12" text-anchor="middle">each part = one JPEG</text>
   <text x="175" y="474" fill="#6b7280" font-size="12" text-anchor="middle">any web browser, no JS</text>
@@ -84,7 +84,7 @@
   <g filter="url(#glow)">
     <rect x="970" y="380" width="270" height="110" rx="14" fill="#240d18" stroke="#ec4899" stroke-width="2.5"/>
   </g>
-  <text x="1105" y="410" fill="#ec4899" font-size="16" font-weight="bold" text-anchor="middle">udp.rs  -  UDP 9000</text>
+  <text x="1105" y="410" fill="#ec4899" font-size="16" font-weight="bold" text-anchor="middle">udp.rs - UDP 9000</text>
   <text x="1105" y="436" fill="#f9fafb" font-size="13" text-anchor="middle">16-byte header + JPEG datagram</text>
   <text x="1105" y="456" fill="#9ca3af" font-size="12" text-anchor="middle">broadcast / unicast</text>
   <text x="1105" y="474" fill="#6b7280" font-size="12" text-anchor="middle">CivicSense phone app</text>
@@ -104,10 +104,10 @@
   <!-- consumers -->
   <text x="175" y="548" fill="#f9fafb" font-size="15" font-weight="bold" text-anchor="middle">🖥️ Any web browser</text>
   <line x1="175" y1="492" x2="175" y2="528" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowCyan)"/>
-  <text x="1105" y="548" fill="#f9fafb" font-size="15" font-weight="bold" text-anchor="middle">📱 CivicSense app  -  Candle YOLOv8</text>
+  <text x="1105" y="548" fill="#f9fafb" font-size="15" font-weight="bold" text-anchor="middle">📱 CivicSense app - Candle YOLOv8</text>
   <line x1="1105" y1="492" x2="1105" y2="528" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrowPink)"/>
 
   <!-- footer -->
   <line x1="80" y1="590" x2="1200" y2="590" stroke="#1f2937" stroke-width="1.5"/>
-  <text x="640" y="616" fill="#6b7280" font-size="15" text-anchor="middle">every hop stays on the car's network  -  frames never leave the vehicle</text>
+  <text x="640" y="616" fill="#6b7280" font-size="15" text-anchor="middle">every hop stays on the car's network - frames never leave the vehicle</text>
 </svg>
