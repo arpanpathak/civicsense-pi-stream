@@ -39,6 +39,10 @@ CivicSense is a growing family of privacy-first, edge-native AI tools for road c
 
 **Data flow:** produce (this repo) -> perceive (stream client) -> consume (main repo). Every stage stays inside the car.
 
+<p align="center">
+  <img src="assets/full-pipeline.svg" alt="CivicSense full pipeline: Pi Stream produces, Stream Client perceives, main repo consumes - all on-device" width="960"/>
+</p>
+
 ---
 
 ## 🧭 Table of Contents
@@ -294,6 +298,12 @@ You should see the IMX335, e.g.:
 If it appears here, capture is ready.
 
 > **Why 2624x1944 max but we stream 640x480?** The IMX335's *raw sensor resolution* is 2624x1944, but we ask `rpicam-vid` to *scale down and encode* to MJPEG at 640x480. That's the sweet spot: plenty clear for a dash-cam feed, but computationally cheap enough that a Pi Zero 2 W sustains ~15 FPS at 40-60% CPU, leaving headroom for the detection client. Raise it via `PI_STREAM_WIDTH`/`PI_STREAM_HEIGHT` if you have power to spare.
+
+The full capture chain, from sensor to encoded frames, is in `assets/camera-pipeline.svg`:
+
+<p align="center">
+  <img src="assets/camera-pipeline.svg" alt="CivicSense camera chain: IMX335 -> CSI-2 -> libcamera -> rpicam-vid -> MJPEG stdout" width="960"/>
+</p>
 
 ---
 
