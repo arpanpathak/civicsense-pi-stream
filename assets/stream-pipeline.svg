@@ -90,8 +90,8 @@
   <text x="1105" y="474" fill="#6b7280" font-size="12" text-anchor="middle">CivicSense phone app</text>
 
   <!-- camera.rs -> SharedFrame arrow -->
-  <path d="M 1065 268 L 1065 330 L 850 330 L 850 362" fill="none" stroke="#34d399" stroke-width="3.5" marker-end="url(#arrowGreen)"/>
-  <text x="980" y="320" fill="#34d399" font-size="12" text-anchor="middle">newest complete JPEG</text>
+  <path d="M 1065 268 L 850 360" fill="none" stroke="#34d399" stroke-width="3.5" marker-end="url(#arrowGreen)"/>
+  <text x="957" y="300" fill="#34d399" font-size="12" text-anchor="middle">newest complete JPEG</text>
 
   <!-- SharedFrame -> http.rs -->
   <line x1="394" y1="420" x2="305" y2="420" stroke="#22d3ee" stroke-width="3.5" marker-end="url(#arrowCyan)"/>
