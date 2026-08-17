@@ -2,6 +2,12 @@
 
 > A tiny, fast, privacy-first **live dash-cam streaming server** that turns a **Raspberry Pi Zero 2 W** with an **Arducam IMX335** camera into a real-time video source your phone can stream straight from, with no cloud, no router, and no SDK lock-in. Built in **100% Rust**, it shells out to `rpicam-vid` and ships **three focused binaries** so you deploy exactly what you need.
 
+<div align="center">
+
+[![CivicSense (main repo)](https://img.shields.io/badge/CivicSense-Main%20Repo-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model) [![Stream Client](https://img.shields.io/badge/Stream%20Client-YOLOv8%20Detection-00CC66)](https://github.com/arpanpathak/civicsense-stream-client) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)](https://www.rust-lang.org) [![Platform](https://img.shields.io/badge/Platform-Pi%20Zero%202%20W-A22846)](https://www.raspberrypi.com/) [![Camera](https://img.shields.io/badge/Camera-Arducam%20IMX335-00BBFF)](https://www.arducam.com/) [![Release](https://img.shields.io/github/v/release/arpanpathak/civicsense-pi-stream?color=00BBFF)](https://github.com/arpanpathak/civicsense-pi-stream/releases) [![Build](https://img.shields.io/badge/Build-Docker%20multi--arch-blue)](Dockerfile)
+
+</div>
+
 ---
 
 ## ✨ Why this project exists (and why it's built this way)
@@ -22,9 +28,6 @@
 ---
 
 ## 🚦 Part of the CivicSense ecosystem
-
-[![CivicSense (main repo)](https://img.shields.io/badge/CivicSense-Main%20Repo-8A2BE2)](https://github.com/arpanpathak/driving-civicsense-vision-model)
-[![Stream Client](https://img.shields.io/badge/Stream%20Client-YOLOv8%20Detection-00CC66)](https://github.com/arpanpathak/civicsense-stream-client)
 
 CivicSense is a growing family of privacy-first, edge-native AI tools for road civility. **All data collection & inference stay on-device - zero video leaves the car.**
 
@@ -57,13 +60,6 @@ CivicSense is a growing family of privacy-first, edge-native AI tools for road c
 15. [Troubleshooting](#troubleshooting)
 16. [Credits](#credits)
 17. [License](#license)
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)](https://www.rust-lang.org)
-[![Platform](https://img.shields.io/badge/Platform-Pi%20Zero%202%20W-A22846)](https://www.raspberrypi.com/)
-[![Camera](https://img.shields.io/badge/Camera-Arducam%20IMX335-00BBFF)](https://www.arducam.com/)
-[![Release](https://img.shields.io/github/v/release/arpanpathak/civicsense-pi-stream?color=00BBFF)](https://github.com/arpanpathak/civicsense-pi-stream/releases)
-[![Build](https://img.shields.io/badge/Build-Docker%20multi--arch-blue)](Dockerfile)
 
 ---
 
